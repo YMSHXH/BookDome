@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/font_spacing1"
+        android:icon="@mipmap/icon_font_spacing1"
+        android:title="" />
+
+    <item
+        android:id="@+id/font_spacing2"
+        android:icon="@mipmap/icon_font_spacing2"
+        android:title=""/>
+
+    <item
+        android:id="@+id/font_spacing3"
+        android:icon="@mipmap/icon_font_spacing3"
+        android:title=""/>
+
+</menu>
