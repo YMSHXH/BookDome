@@ -1,1 +1,1 @@
-include ':app', ':ymsreadbooker'
+include ':app', ':ymsreadbooker', ':filepicker'

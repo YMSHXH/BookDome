@@ -17,6 +17,7 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.example.ymsreadbooker.bean.InfoVo;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -97,8 +98,9 @@ public class BookView extends TextView implements GestureDetector.OnGestureListe
             @Override
             public void run() {
                 try {
-                    InputStream open = getResources().getAssets().open(pash);
-                    InputStreamReader read = new InputStreamReader(open,"GBK");
+                    //InputStream open = getResources().getAssets().open(pash);
+                    InputStream inputStream = new FileInputStream(pash);
+                    InputStreamReader read = new InputStreamReader(inputStream,"GBK");
                     BufferedReader bufferedReader = new BufferedReader(read);
                     StringBuffer stringBuffer = new StringBuffer();
                     String lineTxt = null;

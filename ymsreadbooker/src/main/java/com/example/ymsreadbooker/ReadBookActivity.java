@@ -1,6 +1,8 @@
 package com.example.ymsreadbooker;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -116,14 +118,21 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_book);
-
         mVisible = true;
-
         init();
+    }
+
+    public static void getInstance(Context context,String path){
+        Intent intent = new Intent(context,ReadBookActivity.class);
+        intent.putExtra("FilePath",path);
+        context.startActivity(intent);
     }
 
 
     private void init() {
+
+        String filePath = getIntent().getStringExtra("FilePath");
+
         initView();
         initData();
         //关闭手势滑动
@@ -145,7 +154,7 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
          */
         mContentView.setBackgroundColor(listColor.get(SPUtils.getInstance("YmsReadBook").getInt("BGcolor", 0)));
         mContentView.setCursorVisible(false);
-        mContentView.setBook("悲剧的诞生.txt");
+        mContentView.setBook(filePath);
         mContentView.setBookCallBack(this);
 
 
