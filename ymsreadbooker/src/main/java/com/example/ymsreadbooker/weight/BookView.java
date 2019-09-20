@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.example.ymsreadbooker.bean.InfoVo;
 
@@ -97,7 +98,6 @@ public class BookView extends TextView implements GestureDetector.OnGestureListe
             public void run() {
                 try {
                     InputStream open = getResources().getAssets().open(pash);
-
                     InputStreamReader read = new InputStreamReader(open,"GBK");
                     BufferedReader bufferedReader = new BufferedReader(read);
                     StringBuffer stringBuffer = new StringBuffer();
@@ -259,4 +259,16 @@ public class BookView extends TextView implements GestureDetector.OnGestureListe
         void callMenu();
 
     }
+
+
+
+//    /**
+//     * 计算设置最大行数
+//     */
+//    public void setTextLine() {
+//        if (getHeight() > 0) {
+//            int lineSize = getHeight()  / getLineHeight();
+//            setMaxLines(lineSize - 1);
+//        }
+//    }
 }

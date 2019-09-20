@@ -22,6 +22,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.example.ymsreadbooker.adapter.CatalogAdapter;
@@ -127,9 +128,6 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
         initData();
         //关闭手势滑动
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        mContentView.setCursorVisible(false);
-        mContentView.setBook("悲剧的诞生.txt");
-        mContentView.setBookCallBack(this);
 
         /**
          * 设置字体大小
@@ -146,6 +144,18 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
          * 设置背景颜色
          */
         mContentView.setBackgroundColor(listColor.get(SPUtils.getInstance("YmsReadBook").getInt("BGcolor", 0)));
+        mContentView.setCursorVisible(false);
+        mContentView.setBook("悲剧的诞生.txt");
+        mContentView.setBookCallBack(this);
+
+
+        /**
+         * 设置最大行数
+         */
+        int textMaxLine = SPUtils.getInstance("YmsReadBook").getInt("TextMaxLine", 0);
+        if (textMaxLine >0) {
+            mContentView.setMaxLines(textMaxLine);
+        }
     }
 
 
@@ -270,6 +280,7 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
                 fontSize--;
                 fontSizeText.setText(fontSize + "");
                 mContentView.setTextSize(fontSize);
+                setTextLine();
                 SPUtils.getInstance("YmsReadBook").put("fontSize", fontSize);
             } else {
                 ToastUtils.showLong("字体已为最小");
@@ -284,6 +295,7 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
                 fontSize++;
                 fontSizeText.setText(fontSize + "");
                 mContentView.setTextSize(fontSize);
+                setTextLine();
                 SPUtils.getInstance("YmsReadBook").put("fontSize", fontSize);
             } else {
                 ToastUtils.showLong("字体已为最大");
@@ -311,14 +323,17 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
             int i = menuItem.getItemId();
             if (i == R.id.font_spacing1) {
                 mContentView.setLineSpacing(0, 1f);
+                setTextLine();
                 SPUtils.getInstance("YmsReadBook").put("LineSpacing", 1f);
                 return true;
             } else if (i == R.id.font_spacing2) {
                 mContentView.setLineSpacing(0, 1.5f);
+                setTextLine();
                 SPUtils.getInstance("YmsReadBook").put("LineSpacing", 1.5f);
                 return true;
             } else if (i == R.id.font_spacing3) {
                 mContentView.setLineSpacing(0, 2f);
+                setTextLine();
                 SPUtils.getInstance("YmsReadBook").put("LineSpacing", 2f);
                 return true;
             }
@@ -336,6 +351,8 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
             mContentView.setBackgroundColor(listColor.get(position));
         });
     }
+
+
 
 
     private void initData() {
@@ -389,4 +406,20 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
 
         });
     }
+
+
+    /**
+     * 计算设置最大行数
+     */
+    public void setTextLine() {
+        if (mContentView.getHeight() > 0) {
+            int lineSize = mContentView.getHeight()  / mContentView.getLineHeight();
+
+            SPUtils.getInstance("YmsReadBook").put("TextMaxLine", lineSize - 2);
+
+            mContentView.setMaxLines(lineSize - 2);
+        }
+    }
+
+
 }
