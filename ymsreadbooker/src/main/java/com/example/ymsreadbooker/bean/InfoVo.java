@@ -10,6 +10,16 @@ public class InfoVo {
     private Integer count;
     private Integer offset;
     private String title;
+    private String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public Integer getCount() {
         return count;
     }

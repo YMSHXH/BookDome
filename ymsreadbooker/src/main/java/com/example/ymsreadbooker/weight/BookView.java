@@ -91,16 +91,14 @@ public class BookView extends TextView implements GestureDetector.OnGestureListe
         initView();
     }
 
-
-
     public void setBook(final String pash){
         new Thread(){
             @Override
             public void run() {
                 try {
-                    //InputStream open = getResources().getAssets().open(pash);
-                    InputStream inputStream = new FileInputStream(pash);
-                    InputStreamReader read = new InputStreamReader(inputStream,"GBK");
+                    InputStream open = getResources().getAssets().open(pash);
+                    //InputStream inputStream = new FileInputStream(pash);
+                    InputStreamReader read = new InputStreamReader(open,"GBK");
                     BufferedReader bufferedReader = new BufferedReader(read);
                     StringBuffer stringBuffer = new StringBuffer();
                     String lineTxt = null;
@@ -108,6 +106,7 @@ public class BookView extends TextView implements GestureDetector.OnGestureListe
                     int count = 1; //章节数
                     titleList = new ArrayList<InfoVo>();
                     InfoVo infoVo;
+                    String titleCont = null;
                     while ((lineTxt = bufferedReader.readLine()) != null) {
                         stringBuffer.append("\n"+lineTxt);
                         infoVo = new InfoVo();
@@ -116,7 +115,12 @@ public class BookView extends TextView implements GestureDetector.OnGestureListe
                             infoVo.setCount(count);
                             infoVo.setOffset(offset);
                             infoVo.setTitle(lineTxt);
+                            if (titleCont != null){
+                                infoVo.setContent(titleCont);
+                            }
                             titleList.add(infoVo);
+//                            titleCont = stringBuffer.toString();
+//                            stringBuffer.delete(0,stringBuffer.length());
                             count++;
                         }
                     }
@@ -133,6 +137,49 @@ public class BookView extends TextView implements GestureDetector.OnGestureListe
         }.start();
 
     }
+
+
+
+//    public void setBook(final String pash){
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                try {
+//                    InputStream open = getResources().getAssets().open(pash);
+//                    //InputStream inputStream = new FileInputStream(pash);
+//                    InputStreamReader read = new InputStreamReader(open,"GBK");
+//                    BufferedReader bufferedReader = new BufferedReader(read);
+//                    StringBuffer stringBuffer = new StringBuffer();
+//                    String lineTxt = null;
+//                    int offset = 0; //章节所在行数
+//                    int count = 1; //章节数
+//                    titleList = new ArrayList<InfoVo>();
+//                    InfoVo infoVo;
+//                    while ((lineTxt = bufferedReader.readLine()) != null) {
+//                        stringBuffer.append("\n"+lineTxt);
+//                        infoVo = new InfoVo();
+//                        offset++;
+//                        if (lineTxt.contains("第") && lineTxt.contains("章")) {
+//                            infoVo.setCount(count);
+//                            infoVo.setOffset(offset);
+//                            infoVo.setTitle(lineTxt);
+//                            titleList.add(infoVo);
+//                            count++;
+//                        }
+//                    }
+//                    strTxt = stringBuffer.toString();
+//                    handler.sendEmptyMessage(0);
+//                    bufferedReader.close();
+//                    read.close();
+//                } catch (UnsupportedEncodingException e1) {
+//                    handler.sendEmptyMessage(1);
+//                } catch (IOException e) {
+//                    handler.sendEmptyMessage(2);
+//                }
+//            }
+//        }.start();
+//
+//    }
 
 
     private void initView() {

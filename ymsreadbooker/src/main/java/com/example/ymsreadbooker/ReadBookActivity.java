@@ -29,6 +29,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.example.ymsreadbooker.adapter.CatalogAdapter;
 import com.example.ymsreadbooker.adapter.ReadBackAdater;
+import com.example.ymsreadbooker.bean.InfoVo;
 import com.example.ymsreadbooker.weight.BookView;
 
 import java.util.ArrayList;
@@ -154,7 +155,8 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
          */
         mContentView.setBackgroundColor(listColor.get(SPUtils.getInstance("YmsReadBook").getInt("BGcolor", 0)));
         mContentView.setCursorVisible(false);
-        mContentView.setBook(filePath);
+        mContentView.setBook("悲剧的诞生.txt");
+        //mContentView.setBook("人类简史.txt");
         mContentView.setBookCallBack(this);
 
 
@@ -397,6 +399,9 @@ public class ReadBookActivity extends AppCompatActivity implements BookView.Book
             catalogRecycler.setBackgroundColor(listColor.get(SPUtils.getInstance("YmsReadBook").getInt("BGcolor", 0)));
             catalogRecycler.setLayoutManager(new LinearLayoutManager(this));
             CatalogAdapter catalogAdapter = new CatalogAdapter(mContentView.getTitleList());
+            for (InfoVo infoVo : mContentView.getTitleList()) {
+                LogUtils.e("目录:"+infoVo.getTitle());
+            }
             catalogRecycler.setAdapter(catalogAdapter);
         });
 

@@ -29,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         viewById = findViewById(R.id.textView);
 
+        viewById.setOnClickListener(v ->  {
+            ReadBookActivity.getInstance(this,"");
+
+        });
+
     }
 
 
